@@ -16,7 +16,7 @@ Before you begin, make sure you have the following installed:
 Clone the backend repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/your-backend-repo.git
+git clone https://github.com/yyongjiann/nest-supabase-backend.git
 cd your-backend-repo
 ```
 
