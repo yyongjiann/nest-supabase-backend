@@ -17,6 +17,11 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 		if (isPublic) {
 			return true; // If the route is marked as public, allow access
 		}
+		const request = context.switchToHttp().getRequest();
+		const authHeader = request.headers['authorization'];
+		if (authHeader && authHeader.startsWith('Bearer '))
+			request.token = authHeader.slice(7);
+		console.log(request.token);
 		return super.canActivate(context); // Otherwise, apply the guard
 	}
 }

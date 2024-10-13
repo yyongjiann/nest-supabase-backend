@@ -43,9 +43,10 @@ describe('RunsService', () => {
 		it('should create a new run and return a success message', async () => {
 			const userId = 1;
 			const createRunDto: CreateRunDto = {
-				distanceKm: 5,
-				durationSec: 1800,
-				pacePerKm: '6:00',
+				date: '2022-01-01',
+				distance: '5',
+				time: '18:00',
+				pace: '6:00',
 			};
 			const routeImageUrl = 'https://example.com/route.jpg';
 
@@ -74,9 +75,10 @@ describe('RunsService', () => {
 		it('should throw an error if Prisma throws', async () => {
 			const userId = 1;
 			const createRunDto: CreateRunDto = {
-				distanceKm: 5,
-				durationSec: 1800,
-				pacePerKm: '6:00',
+				date: '2022-01-01',
+				distance: '5',
+				time: '18:00',
+				pace: '6:00',
 			};
 			const routeImageUrl = 'https://example.com/route.jpg';
 
@@ -96,17 +98,19 @@ describe('RunsService', () => {
 			const mockRuns = [
 				{
 					id: 1,
-					distanceKm: 5,
-					durationSec: 1800,
-					pacePerKm: '6:00',
+					date: '2022-01-01',
+					distance: '5',
+					time: '18:00',
+					pace: '6:00',
 					routeImageUrl: '',
 					userId,
 				},
 				{
 					id: 2,
-					distanceKm: 10,
-					durationSec: 3600,
-					pacePerKm: '6:00',
+					date: '2022-01-02',
+					distance: '10',
+					time: '36:00',
+					pace: '6:00',
 					routeImageUrl: '',
 					userId,
 				},
@@ -124,19 +128,21 @@ describe('RunsService', () => {
 
 	describe('findOne', () => {
 		it('should return a run with the specified id', async () => {
+			const userId = 1;
 			const runId = 1;
 			const mockRun = {
 				id: runId,
-				distanceKm: 5,
-				durationSec: 1800,
-				pacePerKm: '6:00',
+				date: '2022-01-01',
+				distance: '5',
+				time: '18:00',
+				pace: '6:00',
 				routeImageUrl: '',
 				userId: 1,
 			};
 
 			(prismaService.run.findUnique as jest.Mock).mockResolvedValue(mockRun);
 
-			const result = await runsService.findOne(runId);
+			const result = await runsService.findOne(userId, runId);
 			expect(prismaService.run.findUnique).toHaveBeenCalledWith({
 				where: { id: runId },
 			});
@@ -144,10 +150,11 @@ describe('RunsService', () => {
 		});
 
 		it('should return null if the run is not found', async () => {
+			const userId = 1;
 			const runId = 999;
 			(prismaService.run.findUnique as jest.Mock).mockResolvedValue(null);
 
-			const result = await runsService.findOne(runId);
+			const result = await runsService.findOne(userId, runId);
 			expect(prismaService.run.findUnique).toHaveBeenCalledWith({
 				where: { id: runId },
 			});

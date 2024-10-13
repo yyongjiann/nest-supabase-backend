@@ -19,11 +19,11 @@ export class RunsService {
 		routeImagePath: string,
 	) {
 		try {
-			const run = await this.prisma.run.create({
+			await this.prisma.run.create({
 				data: {
 					...createRunDto,
-					routeImagePath,
 					userId,
+					routeImagePath,
 				},
 			});
 

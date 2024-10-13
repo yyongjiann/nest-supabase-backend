@@ -1,15 +1,19 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateRunDto {
-	@IsNumber()
+	@IsString()
 	@IsNotEmpty()
-	distanceKm: number;
-
-	@IsNumber()
-	@IsNotEmpty()
-	durationSec: number;
+	distance: string;
 
 	@IsString()
 	@IsNotEmpty()
-	pacePerKm: string;
+	time: string;
+
+	@IsString()
+	@IsNotEmpty()
+	pace: string;
+
+	@IsString()
+	@IsNotEmpty()
+	date: string;
 }

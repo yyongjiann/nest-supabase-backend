@@ -1,26 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { createClient } from '@supabase/supabase-js';
-import { access } from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class SupabaseStorageService {
 	private supabase;
 
-	constructor() {
-		//const token = localStorage.getItem('jwtToken');
+	setAccessToken(token: string) {
 		this.supabase = createClient(
 			process.env.SUPABASE_URL,
 			process.env.SUPABASE_KEY,
 			{
 				global: {
 					headers: {
-						Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoidGVzdDEiLCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImlhdCI6MTcyODU0NDkxMCwiZXhwIjoxNzI4NjMxMzEwfQ.RJuubkqfe0OACIpMme5v4yavBJ71n2iIHuiKp-9Sqxk`,
+						Authorization: `Bearer ${token}`,
 					},
 				},
 			},
 		);
-		//this.supabase.storage.accessToken = 'custom jwt';
 	}
 
 	async uploadRouteImage(file: Express.Multer.File): Promise<string> {

@@ -7,6 +7,7 @@ import {
 	ParseIntPipe,
 	UseInterceptors,
 	UploadedFile,
+	Req,
 } from '@nestjs/common';
 import { RunsService } from './runs.service';
 import { CreateRunDto } from './dto/create-run.dto';
@@ -27,8 +28,12 @@ export class RunsController {
 		@getUser('userId') userId: number,
 		@Body() createRunDto: CreateRunDto,
 		@UploadedFile() routeImage: Express.Multer.File,
+		@Req() req: any,
 	) {
 		// Upload image to Supabase Storage
+		const token = req.token;
+		this.supabaseStorageService.setAccessToken(token);
+
 		const routeImagePath =
 			await this.supabaseStorageService.uploadRouteImage(routeImage);
 
@@ -37,7 +42,10 @@ export class RunsController {
 	}
 
 	@Get()
-	findAll(@getUser('userId') userId: number) {
+	findAll(@getUser('userId') userId: number, @Req() req: any) {
+		// Set the token for the Supabase Storage service
+		const token = req.token;
+		this.supabaseStorageService.setAccessToken(token);
 		return this.runsService.findAll(userId);
 	}
 
@@ -45,7 +53,11 @@ export class RunsController {
 	findOne(
 		@getUser('userId') userId: number,
 		@Param('id', ParseIntPipe) runId: number,
+		@Req() req: any,
 	) {
+		// Set the token for the Supabase Storage service
+		const token = req.token;
+		this.supabaseStorageService.setAccessToken(token);
 		return this.runsService.findOne(userId, runId);
 	}
 }

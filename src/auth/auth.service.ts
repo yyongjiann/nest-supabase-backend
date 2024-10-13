@@ -18,7 +18,7 @@ export class AuthService {
 	async login(dto: AuthDto): Promise<{ access_token: string }> {
 		const user = await this.prisma.user.findUnique({
 			where: {
-				username: dto.userName,
+				username: dto.username,
 			},
 		});
 		if (!user) {
@@ -32,7 +32,6 @@ export class AuthService {
 		}
 
 		const token = await this.signToken(user.id, user.username);
-		//localStorage.setItem('jwtToken', token.access_token);
 		return token;
 	}
 
@@ -42,7 +41,7 @@ export class AuthService {
 			const user = await this.prisma.user.create({
 				data: {
 					name: dto.name,
-					username: dto.userName,
+					username: dto.username,
 					password: hash,
 				},
 			});

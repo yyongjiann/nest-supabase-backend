@@ -25,7 +25,7 @@ async function loadGeoJson(filePath: string) {
 			const wkt = wellknown.stringify(geometry);
 
 			// Construct the SQL query for inserting the data
-			const { error } = await supabase.from('sheltered_routes').insert([
+			const { error } = await supabase.from('covered_linkways').insert([
 				{
 					object_id: objectId,
 					route: `SRID=4326;${wkt}`,

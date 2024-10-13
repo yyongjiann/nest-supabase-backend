@@ -13,10 +13,10 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Run" (
     "id" SERIAL NOT NULL,
-    "distanceKm" DECIMAL(65,30) NOT NULL,
-    "durationSec" INTEGER NOT NULL,
-    "pacePerKm" TEXT NOT NULL,
-    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "date" TEXT NOT NULL,
+    "time" TEXT NOT NULL,
+    "distance" TEXT NOT NULL,
+    "pace" TEXT NOT NULL,
     "routeImagePath" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
 

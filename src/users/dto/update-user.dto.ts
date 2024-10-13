@@ -7,7 +7,7 @@ export class UpdateUserDto {
 
 	@IsString()
 	@IsOptional()
-	userName?: string;
+	username?: string;
 
 	@IsString()
 	@MinLength(8)

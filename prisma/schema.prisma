@@ -20,29 +20,12 @@ model User {
 
 model Run {
   id             Int      @id @default(autoincrement())
-  distanceKm     Decimal
-  durationSec    Int
-  pacePerKm      String
-  date           DateTime @default(now())
+  date           String   // Format as 'dd/MM/yy'
+  time           String   // Format as 'HH:mm'
+  distance       String   // Store as string to match '5.0'
+  pace           String   // Store as string for 'mm:ss' format
   routeImagePath String
   userId         Int
   user           User     @relation(fields: [userId], references: [id])
 }
 
-model sheltered_routes {
-  id         Int                      @id @default(autoincrement())
-  object_id  Int?
-  route      Unsupported("geometry")?
-  created_at DateTime?                @default(now()) @db.Timestamp(6)
-
-  @@index([route], map: "idx_sheltered_routes_geom", type: Gist)
-}
-
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
-model spatial_ref_sys {
-  srid      Int     @id
-  auth_name String? @db.VarChar(256)
-  auth_srid Int?
-  srtext    String? @db.VarChar(2048)
-  proj4text String? @db.VarChar(2048)
-}
